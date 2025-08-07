@@ -1,0 +1,12 @@
+# Example backend configuration for remote state
+# Rename this file to backend.tf and configure your S3 bucket and DynamoDB table
+
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "terraform/state"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-state-lock"
+    encrypt        = true
+  }
+}
