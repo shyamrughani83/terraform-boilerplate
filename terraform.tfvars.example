@@ -27,3 +27,16 @@ db_instance_class = "db.t3.micro"
 db_name          = "myappdb"
 db_username      = "admin"
 db_password      = "MySecurePassword123!"
+
+# ECS Configuration (comment out if using EKS)
+ecs_task_cpu       = "256"
+ecs_task_memory    = "512"
+ecs_container_port = 80
+ecs_desired_count  = 2
+
+# EKS Configuration (comment out if using ECS)
+kubernetes_version      = "1.28"
+eks_node_instance_type  = "t3.medium"
+eks_desired_nodes       = 2
+eks_min_nodes          = 1
+eks_max_nodes          = 4

@@ -78,3 +78,47 @@ module "s3" {
   environment  = var.environment
   common_tags  = var.common_tags
 }
+
+# ECR Module
+module "ecr" {
+  source = "./modules/ecr"
+  
+  project_name = var.project_name
+  environment  = var.environment
+  common_tags  = var.common_tags
+}
+
+# ECS Module (optional - comment out if using EKS)
+module "ecs" {
+  source = "./modules/ecs"
+  
+  project_name           = var.project_name
+  environment           = var.environment
+  vpc_id                = module.vpc.vpc_id
+  public_subnet_ids     = module.vpc.public_subnet_ids
+  private_subnet_ids    = module.vpc.private_subnet_ids
+  ecs_security_group_id = module.security_groups.ecs_security_group_id
+  alb_security_group_id = module.security_groups.alb_security_group_id
+  ecr_repository_url    = module.ecr.repository_url
+  task_cpu              = var.ecs_task_cpu
+  task_memory           = var.ecs_task_memory
+  container_port        = var.ecs_container_port
+  desired_count         = var.ecs_desired_count
+  common_tags           = var.common_tags
+}
+
+# EKS Module (optional - comment out if using ECS)
+module "eks" {
+  source = "./modules/eks"
+  
+  project_name       = var.project_name
+  environment        = var.environment
+  public_subnet_ids  = module.vpc.public_subnet_ids
+  private_subnet_ids = module.vpc.private_subnet_ids
+  kubernetes_version = var.kubernetes_version
+  node_instance_type = var.eks_node_instance_type
+  desired_nodes      = var.eks_desired_nodes
+  min_nodes          = var.eks_min_nodes
+  max_nodes          = var.eks_max_nodes
+  common_tags        = var.common_tags
+}

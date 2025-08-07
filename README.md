@@ -6,10 +6,13 @@ A comprehensive Terraform boilerplate for AWS infrastructure that includes VPC, 
 
 This boilerplate creates:
 - **VPC** with public and private subnets across multiple AZs
-- **Security Groups** for web, application, and database tiers
+- **Security Groups** for web, application, database, ALB, and ECS tiers
 - **EC2 instances** in both public (web) and private (app) subnets
 - **RDS MySQL database** in private subnets
 - **S3 bucket** with encryption and versioning
+- **ECR repository** for container images
+- **ECS cluster** with Fargate and Application Load Balancer
+- **EKS cluster** with managed node groups
 
 ## Prerequisites
 
@@ -65,7 +68,10 @@ modules/
 ├── security-groups/  # Security groups for all tiers
 ├── ec2/             # Web and app instances
 ├── rds/             # MySQL database
-└── s3/              # S3 bucket with security
+├── s3/              # S3 bucket with security
+├── ecr/             # Container registry
+├── ecs/             # ECS Fargate cluster with ALB
+└── eks/             # EKS cluster with managed nodes
 ```
 
 ## Outputs
@@ -75,6 +81,9 @@ After deployment, you'll get:
 - Instance IDs and IP addresses
 - Database endpoint (sensitive)
 - S3 bucket name and ARN
+- ECR repository URL
+- ECS cluster name and load balancer DNS
+- EKS cluster name and endpoint
 
 ## Security Features
 
@@ -82,6 +91,25 @@ After deployment, you'll get:
 - Security groups with least privilege access
 - S3 bucket encryption and public access blocking
 - RDS encryption at rest
+
+## Container Services
+
+**Choose ECS OR EKS** (not both):
+
+### ECS (Fargate)
+- Serverless containers
+- Integrated with ALB
+- Auto-scaling enabled
+- CloudWatch logging
+
+### EKS (Kubernetes)
+- Managed Kubernetes
+- Worker nodes in private subnets
+- Auto-scaling node groups
+- CloudWatch logging
+
+**To use only one:**
+Comment out the unwanted module in `main.tf`
 
 ## Customization
 

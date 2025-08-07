@@ -90,3 +90,59 @@ variable "db_password" {
   sensitive   = true
   default     = "changeme123!"
 }
+
+# ECS Variables
+variable "ecs_task_cpu" {
+  description = "CPU units for ECS task"
+  type        = string
+  default     = "256"
+}
+
+variable "ecs_task_memory" {
+  description = "Memory for ECS task"
+  type        = string
+  default     = "512"
+}
+
+variable "ecs_container_port" {
+  description = "Port on which the container listens"
+  type        = number
+  default     = 80
+}
+
+variable "ecs_desired_count" {
+  description = "Desired number of ECS tasks"
+  type        = number
+  default     = 2
+}
+
+# EKS Variables
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.28"
+}
+
+variable "eks_node_instance_type" {
+  description = "Instance type for EKS nodes"
+  type        = string
+  default     = "t3.medium"
+}
+
+variable "eks_desired_nodes" {
+  description = "Desired number of EKS nodes"
+  type        = number
+  default     = 2
+}
+
+variable "eks_min_nodes" {
+  description = "Minimum number of EKS nodes"
+  type        = number
+  default     = 1
+}
+
+variable "eks_max_nodes" {
+  description = "Maximum number of EKS nodes"
+  type        = number
+  default     = 4
+}
