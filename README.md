@@ -6,8 +6,10 @@ A comprehensive Terraform boilerplate for AWS infrastructure that includes VPC, 
 
 This boilerplate creates:
 - **VPC** with public and private subnets across multiple AZs
-- **Security Groups** for web, application, database, ALB, and ECS tiers
+- **Security Groups** for web, application, database, ALB, ECS, bastion, and private tiers
 - **EC2 instances** in both public (web) and private (app) subnets
+- **Bastion host** for secure access to private instances
+- **Private instance** accessible only via bastion (no public IP)
 - **RDS MySQL database** in private subnets
 - **S3 bucket** with encryption and versioning
 - **ECR repository** for container images
@@ -79,6 +81,8 @@ modules/
 After deployment, you'll get:
 - VPC and subnet IDs
 - Instance IDs and IP addresses
+- Bastion host public IP for secure access
+- Private instance IP (accessible only via bastion)
 - Database endpoint (sensitive)
 - S3 bucket name and ARN
 - ECR repository URL
@@ -87,8 +91,11 @@ After deployment, you'll get:
 
 ## Security Features
 
-- Private subnets for database and app tiers
+- Private subnets for database, app, and private tiers
+- Bastion host for secure SSH access to private instances
+- Dedicated private instance with no public IP
 - Security groups with least privilege access
+- Private instances only accessible via bastion host
 - S3 bucket encryption and public access blocking
 - RDS encryption at rest
 

@@ -65,6 +65,18 @@ variable "key_name" {
   default     = ""
 }
 
+variable "bastion_instance_type" {
+  description = "Instance type for bastion host"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "private_instance_type" {
+  description = "Instance type for private instance"
+  type        = string
+  default     = "t3.micro"
+}
+
 # RDS Variables
 variable "db_instance_class" {
   description = "RDS instance class"

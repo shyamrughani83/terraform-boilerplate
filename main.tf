@@ -50,9 +50,13 @@ module "ec2" {
   key_name              = var.key_name
   public_subnet_ids     = module.vpc.public_subnet_ids
   private_subnet_ids    = module.vpc.private_subnet_ids
-  web_security_group_id = module.security_groups.web_security_group_id
-  app_security_group_id = module.security_groups.app_security_group_id
-  common_tags           = var.common_tags
+  web_security_group_id     = module.security_groups.web_security_group_id
+  app_security_group_id     = module.security_groups.app_security_group_id
+  bastion_security_group_id  = module.security_groups.bastion_security_group_id
+  private_security_group_id  = module.security_groups.private_security_group_id
+  bastion_instance_type      = var.bastion_instance_type
+  private_instance_type      = var.private_instance_type
+  common_tags                = var.common_tags
 }
 
 # RDS Module

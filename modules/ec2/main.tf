@@ -34,6 +34,49 @@ resource "aws_instance" "web" {
   })
 }
 
+# Bastion Host
+resource "aws_instance" "bastion" {
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = var.bastion_instance_type
+  key_name               = var.key_name
+  subnet_id              = var.public_subnet_ids[0]
+  vpc_security_group_ids = [var.bastion_security_group_id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y htop
+              echo "Bastion Host" > /tmp/bastion-info.txt
+              EOF
+
+  tags = merge(var.common_tags, {
+    Name = "${var.project_name}-${var.environment}-bastion"
+    Type = "Bastion"
+  })
+}
+
+# Private Instance (accessible only via bastion)
+resource "aws_instance" "private" {
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = var.private_instance_type
+  key_name               = var.key_name
+  subnet_id              = var.private_subnet_ids[0]
+  vpc_security_group_ids = [var.private_security_group_id]
+  associate_public_ip_address = false
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y htop mysql
+              echo "Private Server - Access via Bastion Only" > /tmp/private-info.txt
+              EOF
+
+  tags = merge(var.common_tags, {
+    Name = "${var.project_name}-${var.environment}-private"
+    Type = "Private"
+  })
+}
+
 # Application Instances
 resource "aws_instance" "app" {
   count = length(var.private_subnet_ids)

@@ -41,6 +41,26 @@ output "app_instance_ids" {
   value       = module.ec2.app_instance_ids
 }
 
+output "bastion_instance_id" {
+  description = "ID of the bastion host"
+  value       = module.ec2.bastion_instance_id
+}
+
+output "bastion_public_ip" {
+  description = "Public IP address of the bastion host"
+  value       = module.ec2.bastion_public_ip
+}
+
+output "private_instance_id" {
+  description = "ID of the private instance"
+  value       = module.ec2.private_instance_id
+}
+
+output "private_instance_private_ip" {
+  description = "Private IP address of the private instance"
+  value       = module.ec2.private_instance_private_ip
+}
+
 # RDS Outputs
 output "db_endpoint" {
   description = "RDS instance endpoint"
